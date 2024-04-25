@@ -1,12 +1,17 @@
 class Table {
-
-    raw = document.getElementById('table')
-    
+    constructor({columns, data}) {
+        this.columns = columns;
+        this.data = data;
+        
+    }
     
     makeHeader() {
         let header = document.createElement('thead')
         header.innerHTML = 
-        "<tr><th>" + columns[0] + "</th><th>" + columns[1] + "</th></tr>"
+        `<tr>
+            <th> ${this.columns[0]} </th>
+            <th> ${this.columns[1]} </th>
+        </tr>`
 
         return header
     }
@@ -15,18 +20,19 @@ class Table {
         let body = document.createElement('tbody')
         body.innerHTML = 
         `<tr>
-            <td>${data[0][0]}</td>  
-            <td>${data[0][1]}</td>    
+            <td>${this.data[0][0]}</td>  
+            <td>${this.data[0][1]}</td>    
         </tr>`+
-        `<tr>
-            <td>${data[1][0]}</td>  
-            <td>${data[1][1]}</td>    
+        `<tr>   
+            <td>${this.data[1][0]}</td>  
+            <td>${this.data[1][1]}</td>    
         </tr>`
 
         return body
     }
     
     makeTable() { 
+        let raw = document.getElementById('table')
         let table = document.createElement('table')
         table.classList.add('table', 'table-hover')
 
@@ -36,21 +42,19 @@ class Table {
         table.append(thead)
         table.append(tbody)
         
-        this.raw.append(table)
+        raw.append(table)
         
     }
 
 }
 
+ 
 
-
-var columns = ['Name', 'Email'];
-var data = [
+const run = new Table({
+    columns : ['Name', 'Email'],
+    data : [
         ['John Chena', 'johnchena@gmail.com'],
         ['John Wick', 'johnwick@gmail.com']
     ]
-
-const run = new Table()
-run.makeHeader()
-run.makeBody()
+}) 
 run.makeTable()
